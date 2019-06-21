@@ -7,14 +7,6 @@
 
 class colorSensor: public freqMeasure{
 private:
-    std::array<int,2> zone1 = {0,32};
-    std::array<int,2> zone2 = {32,64};
-    std::array<int,2> zone3 = {64,96};
-    std::array<int,2> zone4 = {96,128};
-    std::array<int,2> zone5 = {128,160};
-    std::array<int,2> zone6 = {160,192};
-    std::array<int,2> zone7 = {192,224};
-    std::array<int,2> zone8 = {224,255};
     hwlib::target::pin_out s0;
     hwlib::target::pin_out s1;
     hwlib::target::pin_out s2;
@@ -32,7 +24,9 @@ public:
         s3( s3 )
     {s0.write(0);
     s1.write(1);}
-
+    
+    char getColor();
+    std::array<int, 3> getRGB();
     void setRed();
     void setGreen();
     void setBlue();
@@ -41,6 +35,7 @@ public:
     void calculateRGB();
     void shrinkValueRGB();
     void printRGB();
-    void nameColor();
+    void nameColorMode1();
+    void nameColorMode2();
 };
 #endif //COLORSENSOR_HPP
