@@ -127,19 +127,20 @@ void colorSensor::nameColorMode1(){
     hwlib::cout << "___________________________________" << hwlib::endl;
 
     std::array<int, 3> value = {redZone, greenZone, blueZone};
-    std::array<std::array<int, 2>,3> yellowValues = {{{4,5},{5,6},{5,6}}};
-    std::array<std::array<int, 2>,3> redValues = {{{3,4},{5,5},{4,4}}};
-    std::array<std::array<int, 2>,3> greenValues = {{{7,8},{7,7},{6,7}}};
-    std::array<std::array<int, 2>,3> blueValues = {{{7,8},{6,7},{4,5}}};
+    //std::array<std::array<int, 2>,3> yellowValues = {{{4,5},{5,6},{5,6}}};
+    std::array<std::array<int, 2>,3> redValues = {{{3,4},{6,7},{5,6}}};
+    std::array<std::array<int, 2>,3> greenValues = {{{5,6},{5,6},{5,6}}};
+    std::array<std::array<int, 2>,3> blueValues = {{{5,6},{4,5},{3,4}}};
     const int AmountOfColors = 4;
     std::array<int, AmountOfColors> colorCounts = {0, 0, 0, 0};
     for( unsigned int i = 0; i < 3; i++ ){
-        if(value[i] == yellowValues[i][0] || value[i] == yellowValues[i][1]){ colorCounts[0]++; }
+        //if(value[i] == yellowValues[i][0] || value[i] == yellowValues[i][1]){ colorCounts[0]++; }
         if(value[i] == redValues[i][0] || value[i] == redValues[i][1]){ colorCounts[1]++; }
         if(value[i] == greenValues[i][0] || value[i] == greenValues[i][1]){ colorCounts[2]++; }
         if(value[i] == blueValues[i][0] || value[i] == blueValues[i][1]){ colorCounts[3]++; }
     }
     std::array<char, AmountOfColors> colorChars = {'Y','R','G','B'};
+    color = 'X';
     for( unsigned int i = 0; i < AmountOfColors; i++ ){
         if( colorCounts[i] == 3 ){
             color = colorChars[i];

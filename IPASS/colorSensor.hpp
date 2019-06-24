@@ -24,6 +24,15 @@ public:
         s3( s3 )
     {s0.write(0);
     s1.write(1);}
+
+    colorSensor( hwlib::target::pin_adc & freq, colorSensor & rhs ):
+        freqMeasure( freq ),
+        s0( rhs.s0 ),
+        s1( rhs.s1 ),
+        s2( rhs.s2 ),
+        s3( rhs.s3 )
+    {s0.write(0);
+    s1.write(1);}
     
     char getColor();
     std::array<int, 3> getRGB();
