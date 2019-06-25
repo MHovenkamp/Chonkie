@@ -28,6 +28,7 @@ public:
     healthbar hunger;
     healthbar thirst;
     healthbar sleep;
+    char activity;
     int hungerLevel;
     int thirstLevel;
     int sleepLevel;
@@ -48,7 +49,7 @@ public:
 
     void draw( hwlib::glcd_oled & display );
     void set();
-    void manageHealth();
+    char manageHealth();
 };
 
 class chonkie: public lives{
@@ -61,8 +62,13 @@ private:
     hwlib::circle rightEye;
     hwlib::circle leftPupil;
     hwlib::circle rightPupil;
+    crosses leftEyeDeath;
+    crosses rightEyeDeath;
+    hwlib::circle mouth;
     bool left;
     bool right;
+    bool mouthBool;
+    bool drinkBool;
 public:
     chonkie( hwlib::target::pin_adc & freq , colorSensor & sensor, hwlib::glcd_oled & display, hwlib::xy coordinaat ):
         lives( freq, sensor ),
@@ -73,11 +79,19 @@ public:
         leftEye( hwlib::circle( hwlib::xy( coordinaat.x - 10, coordinaat.y), 5, hwlib::white)),
         rightEye( hwlib::circle( hwlib::xy( coordinaat.x + 10, coordinaat.y), 5, hwlib::white)),
         leftPupil( hwlib::circle( hwlib::xy( coordinaat.x - 8, coordinaat.y), 2, hwlib::white)),
-        rightPupil( hwlib::circle( hwlib::xy( coordinaat.x + 8, coordinaat.y), 2, hwlib::white))
+        rightPupil( hwlib::circle( hwlib::xy( coordinaat.x + 8, coordinaat.y), 2, hwlib::white)),
+        leftEyeDeath( display, coordinaat.x -10, coordinaat.y, coordinaat.x - 5, coordinaat.y + 5),
+        rightEyeDeath( display, coordinaat.x + 5, coordinaat.y, coordinaat.x + 10, coordinaat.y + 5),
+        mouth( hwlib::circle( hwlib::xy( coordinaat.x, coordinaat.y + 4), 5, hwlib::white))
     {}
 
     void print();
     void updateIdle();
+    void animationCheck();
     bool deathCkeck();
+    void death();
+    void eat();
+    void drink();
+    void sleep();
 };
 #endif //CHONKIE_HPP

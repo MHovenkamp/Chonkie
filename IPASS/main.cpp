@@ -18,22 +18,28 @@ int main( void ){
     auto display = hwlib::glcd_oled( i2c_bus, 0x3c );  
      
     colorSensor sensor( frequenty , s0, s1, s2, s3 );
-    lives levens( frequenty, sensor );
     chonkie baby( frequenty, sensor , display, hwlib::xy(40,33));
     
     display.clear();
+    bool death = false;
     for(;;){
-        // display.clear();
-        // sensor.calculateRGB();
-        // sensor.nameColorMode1();
-        // hwlib::cout << sensor.getColor() << hwlib::endl;
-        display.clear();
-        levens.manageHealth();
-        levens.set();
-        levens.draw( display );
-        baby.print();
-        baby.updateIdle();
-        display.flush();
+        if( death == false ){
+            display.clear();
+            baby.manageHealth();
+            baby.set();
+            baby.draw( display ); //healtbars
+            baby.print();
+            baby.updateIdle();
+            baby.animationCheck();
+            death = baby.deathCkeck();
+        }
+        if( death ){
+            display.clear();
+            baby.death();
+            baby.print();
+            display.flush();
+            break;
+        }
         hwlib::wait_ms(500);
     }
 }

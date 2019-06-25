@@ -128,7 +128,7 @@ void colorSensor::nameColorMode1(){
 
     std::array<int, 3> value = {redZone, greenZone, blueZone};
     //std::array<std::array<int, 2>,3> yellowValues = {{{4,5},{5,6},{5,6}}};
-    std::array<std::array<int, 2>,3> redValues = {{{3,4},{6,7},{5,6}}};
+    std::array<std::array<int, 2>,3> redValues = {{{4,5},{6,7},{6,7}}};
     std::array<std::array<int, 2>,3> greenValues = {{{5,6},{5,6},{5,6}}};
     std::array<std::array<int, 2>,3> blueValues = {{{5,6},{4,5},{3,4}}};
     const int AmountOfColors = 4;
