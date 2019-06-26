@@ -9,10 +9,10 @@
 #############################################################################
 
 # source files in this project (main.cpp is automatically assumed)
-SOURCES := freqMeasure.cpp colorSensor.cpp chonkie.cpp buildingBlocks.cpp
+SOURCES := freqMeasuringtool.cpp colorSensor.cpp chonkie.cpp buildingBlocks.cpp
 
 # header files in this project
-HEADERS := freqMeasure.hpp colorSensor.hpp chonkie.hpp buildingBlocks.hpp
+HEADERS := freqMeasuringtool.hpp colorSensor.hpp chonkie.hpp buildingBlocks.hpp
 
 # other places to look for files for this project
 SEARCH  := 

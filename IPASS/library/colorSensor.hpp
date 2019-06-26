@@ -16,8 +16,6 @@
 /// This ADT can also give the name of a few colors with two different modes as a char and is stored as a char. 
 /// If a char is used multiple times the primary color is capitalized and the secundary color lowercase.
 /// this ADT is reliant on hwlb and freqMeasuringtool.
-/// https://github.com/wovo/hwlib
-
 class colorSensor: public freqMeasuringtool{
 private:
     hwlib::target::pin_out s0;
@@ -127,7 +125,6 @@ public:
     /// \details
     /// This function fils the color char with either the color red, green or blue. It is consistent but can be influenced bij ambient light.
     /// If the color in front of the sensor cannot be defined as red, green or blue the color will be filled with an 'X'.
-    /// The color is determined by putting shrinkValueRGB values into 8 different zones. the combination of three zondes correspond with a color.
     /// red = 'R
     /// green = 'G'
     /// blue = 'B'
@@ -137,16 +134,15 @@ public:
     /// nameColorMode2() function.
     /// \details
     /// This function fils the color char with either the color red, green, blue, brown, yellow, orange or pink. 
-    /// It is not very consistent and can be influenced by ambient light.
+    /// It is not very consistent and can be influenced bij ambient light.
     /// If the color in front of the sensor cannot be defined as one of the colors the color will be filled with an 'X'.
-    /// The color is determined by putting shrinkValueRGB values into 16 different zones. the combination of three zondes correspond with a color.s
-    /// red = 'R',
-    /// green = 'G',
-    /// blue = 'B',
-    /// brown = 'b',
-    /// yellow = 'Y',
-    /// orange = 'O',
-    /// pink = 'P'.
+    /// red = 'R
+    /// green = 'G'
+    /// blue = 'B'
+    /// brown = 'b'
+    /// yellow = 'Y'
+    /// orange = 'O'
+    /// pink = 'P'
     void nameColorMode2();
 };
 #endif //COLORSENSOR_HPP

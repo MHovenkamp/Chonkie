@@ -1,6 +1,6 @@
-#include "freqMeasure.hpp"
+#include "freqMeasuringtool.hpp"
 
-void freqMeasure::sample(){
+void freqMeasuringtool::sample(){
     std::array<uint_fast32_t, 30> testsamples;
     for(unsigned int i = 0; i < 30; i++){
         testsamples[i] = pin.read();
@@ -18,7 +18,7 @@ void freqMeasure::sample(){
     while(pin.read() == high);
     t2 = hwlib::now_us();
 }
-int freqMeasure::calculate(){
+int freqMeasuringtool::calculate(){
     uint_fast64_t duration = t2-t1;
     frequenty = duration;
     return frequenty;
