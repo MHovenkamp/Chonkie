@@ -18,26 +18,16 @@ protected:
     int frequenty;
     uint_fast64_t t1;
     uint_fast64_t t2;
+    hwlib::target::pin_in & pin;
 public:
-    hwlib::target::pin_adc pin;
 
     /// \brief
     /// freqMeasuringtool constructor with pin.
     /// \details
     /// This is a constructor that constructs an ADT with the input of an hwlib::target::pin_adc.
-    freqMeasuringtool( hwlib::target::pin_adc & pin ):
+    freqMeasuringtool( hwlib::target::pin_in & pin ):
         pin( pin )
     {}
-
-    /// \brief
-    /// freqMeasuringtool constructor with other freqMeasuringtool.
-    /// \details
-    /// This is a constructor that constructs an ADT with the input of an other freqmeasuringtool.
-    /// The pin of the input is copied to the new ADT.
-    freqMeasuringtool( freqMeasuringtool & rhs ):
-        pin( rhs.pin )
-    {}
-
     /// \brief
     /// sample() function.
     /// \details
@@ -48,8 +38,15 @@ public:
     /// calculate() function.
     /// \details
     /// The sample function has te be run once in order to use this function. The previously filled int frequenty is in microseconds. 
-    /// In this function the frequency is transferred into hertz and returned as an int.
-    int calculate();
+    /// In this function the frequency is transferred into hertz.
+    void calculate();
+
+    /// \brief
+    /// read() function.
+    /// \details
+    /// The read function gives you the frequenty of the pin back as an int.
+    int read();
+
 };
 
 #endif //FREQMEASURINGTOOL_HPP

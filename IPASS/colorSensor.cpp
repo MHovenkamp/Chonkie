@@ -17,34 +17,27 @@ std::array<int, 3> colorSensor::getRGB(){
 
 
 void colorSensor::setRed(){
-    s2.write(0);
-    s3.write(0);
+    pins.write( 0b0010 );
     flush();
 }
 
 void colorSensor::setClear(){
-    s2.write(1);
-    s3.write(0);
+    pins.write( 6 );
     flush();
 }
 
 void colorSensor::setGreen(){
-    s2.write(1);
-    s3.write(1);
+    pins.write( 7 );
     flush();
 }
 
 void colorSensor::setBlue(){
-    s2.write(0);
-    s3.write(1);
+    pins.write( 5 );
     flush();
 }
 
 void colorSensor::flush(){
-    s0.flush();
-    s1.flush();
-    s2.flush();
-    s3.flush();
+    pins.flush();
 }
 
 void colorSensor::calculatelightIntensity(){
@@ -53,7 +46,7 @@ void colorSensor::calculatelightIntensity(){
     std::array<int,sampleSize> samples;
     for (unsigned int i = 0; i < sampleSize; i++){
         sample();
-        samples[i]= calculate();
+        samples[i]= read();
     }
     int value = 0;
     for (unsigned int j = 0; j < sampleSize; j++){
@@ -67,7 +60,7 @@ int colorSensor::calculateColor(){
     std::array<int,sampleSize> samples;
     for (unsigned int i = 0; i < sampleSize; i++){
         sample();
-        samples[i]= calculate();
+        samples[i]= read();
     }
     int value = 0;
     for (unsigned int j = 0; j < sampleSize; j++){

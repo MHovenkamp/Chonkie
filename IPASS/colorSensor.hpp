@@ -20,11 +20,7 @@
 
 class colorSensor: public freqMeasuringtool{
 private:
-    
-    hwlib::target::pin_out s0;
-    hwlib::target::pin_out s1;
-    hwlib::target::pin_out s2;
-    hwlib::target::pin_out s3;
+    hwlib::port_out & pins;
     int red = 0;
     int green = 0;
     int blue = 0;
@@ -46,27 +42,10 @@ public:
     /// \details
     /// This constructor construct the colorSensor with the intput of an hwlib::target::pin_acd and four hwlib::target::pin_out. 
     /// It also sets the frequenty scaling to 2%.
-    colorSensor( hwlib::target::pin_adc & freq, hwlib::target::pin_out & s0, hwlib::target::pin_out & s1, hwlib::target::pin_out & s2, hwlib::target::pin_out & s3 ):
+    colorSensor( hwlib::target::pin_in & freq, hwlib::port_out & pins ):
         freqMeasuringtool( freq ),
-        s0( s0 ),
-        s1( s1 ),
-        s2( s2 ),
-        s3( s3 )
-    {s0.write(0);
-    s1.write(1);}
-    /// \brief
-    /// colorSensor constructor with other colorSensor.
-    /// \details
-    /// This constructor construct the colorSensor with the intput of an hwlib::target::pin_acd and an other colorSensor. 
-    /// It also sets the frequenty scaling to 2%.
-    colorSensor( hwlib::target::pin_adc & freq, colorSensor & rhs ):
-        freqMeasuringtool( freq ),
-        s0( rhs.s0 ),
-        s1( rhs.s1 ),
-        s2( rhs.s2 ),
-        s3( rhs.s3 )
-    {s0.write(0);
-    s1.write(1);}
+        pins( pins )
+    {}
     
     /// \brief
     /// getColor() function.
