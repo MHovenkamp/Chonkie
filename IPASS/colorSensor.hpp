@@ -20,6 +20,7 @@
 
 class colorSensor: public freqMeasuringtool{
 private:
+    
     hwlib::target::pin_out s0;
     hwlib::target::pin_out s1;
     hwlib::target::pin_out s2;
@@ -27,8 +28,19 @@ private:
     int red = 0;
     int green = 0;
     int blue = 0;
+    int lightIntensity = 0;
     char color = 'X';
 public:
+    enum class colors: char {
+        red     = 'R',
+        green   = 'G',
+        blue    = 'B',
+        yellow  = 'Y',
+        pink    = 'P',
+        brown   = 'b',
+        orange  = 'O',
+        empty   = 'X'
+    };
     /// \brief
     /// colorSensor constructor.
     /// \details
@@ -63,6 +75,12 @@ public:
     char getColor();
 
     /// \brief
+    /// getlightIntensity() function.
+    /// \details
+    /// This function returns the lightIntensity as an int.
+    int getlightIntensity();
+
+    /// \brief
     /// getRGB() function.
     /// \details
     /// This function returns the RGB values as an array of integers int the order red, green, blue.
@@ -89,7 +107,7 @@ public:
     /// \brief
     /// setClear() function.
     /// \details
-    /// This function sets the color sensor to read clear values and flushes the sensor.
+    /// This function sets the color sensor to read clear values for light intensity and flushes the sensor.
     void setClear();
 
     /// \brief
@@ -97,6 +115,12 @@ public:
     /// \details
     /// This function flushes the chosen settings to the sensor.
     void flush();
+
+    /// \brief
+    /// calculatelightIntensity() function.
+    /// \details
+    /// This function fils the int lightIntensity with the light intensity.
+    void calculatelightIntensity();
 
     /// \brief
     /// calculateColor() function.

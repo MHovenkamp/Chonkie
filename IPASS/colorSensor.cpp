@@ -6,6 +6,10 @@ char colorSensor::getColor(){
     return color;
 }
 
+int colorSensor::getlightIntensity(){
+    return lightIntensity;
+}
+
 std::array<int, 3> colorSensor::getRGB(){
     std::array<int, 3> RGB = {red, green, blue};
     return RGB;
@@ -41,6 +45,21 @@ void colorSensor::flush(){
     s1.flush();
     s2.flush();
     s3.flush();
+}
+
+void colorSensor::calculatelightIntensity(){
+    setClear();
+    const int sampleSize = 25;
+    std::array<int,sampleSize> samples;
+    for (unsigned int i = 0; i < sampleSize; i++){
+        sample();
+        samples[i]= calculate();
+    }
+    int value = 0;
+    for (unsigned int j = 0; j < sampleSize; j++){
+        value += samples[j];
+    }
+    lightIntensity = value/sampleSize;
 }
 
 int colorSensor::calculateColor(){
@@ -100,7 +119,7 @@ void colorSensor::printRGB(){
     hwlib::cout << "Red: " << red << hwlib::endl;
     hwlib::cout << "Green: " << green << hwlib::endl;
     hwlib::cout << "Blue: " << blue << hwlib::endl;
-    if(color == 'O' || color == 'b' || color == 'P'){
+    if(color == static_cast<char>(colors::orange) || color == static_cast<char>(colors::blue) || color == static_cast<char>(colors::pink) || color == static_cast<char>(colors::red)){
         hwlib::cout << "Color (30% chance) " << color << hwlib::endl;
     }
     else{
@@ -133,23 +152,21 @@ void colorSensor::nameColorMode1(){
     hwlib::cout << "___________________________________" << hwlib::endl;
 
     std::array<int, 3> value = {redZone, greenZone, blueZone};
-    //std::array<std::array<int, 2>,3> yellowValues = {{{4,5},{5,6},{5,6}}};
     std::array<std::array<int, 2>,3> redValues = {{{4,5},{6,7},{6,7}}};
     std::array<std::array<int, 2>,3> greenValues = {{{5,6},{5,6},{5,6}}};
     std::array<std::array<int, 2>,3> blueValues = {{{5,6},{4,5},{3,4}}};
     const int AmountOfColors = 4;
-    std::array<int, AmountOfColors> colorCounts = {0, 0, 0, 0};
+    std::array<int, AmountOfColors> colorCounts = {0, 0, 0};
     for( unsigned int i = 0; i < 3; i++ ){
-        //if(value[i] == yellowValues[i][0] || value[i] == yellowValues[i][1]){ colorCounts[0]++; }
-        if(value[i] == redValues[i][0] || value[i] == redValues[i][1]){ colorCounts[1]++; }
-        if(value[i] == greenValues[i][0] || value[i] == greenValues[i][1]){ colorCounts[2]++; }
-        if(value[i] == blueValues[i][0] || value[i] == blueValues[i][1]){ colorCounts[3]++; }
+        if(value[i] == redValues[i][0] || value[i] == redValues[i][1]){ colorCounts[0]++; }
+        if(value[i] == greenValues[i][0] || value[i] == greenValues[i][1]){ colorCounts[1]++; }
+        if(value[i] == blueValues[i][0] || value[i] == blueValues[i][1]){ colorCounts[2]++; }
     }
-    std::array<char, AmountOfColors> colorChars = {'Y','R','G','B'};
-    color = 'X';
+    std::array<colors, AmountOfColors> colorChars = {colors::red, colors::green, colors::blue};
+    color = static_cast<char>(colors::empty);
     for( unsigned int i = 0; i < AmountOfColors; i++ ){
         if( colorCounts[i] == 3 ){
-            color = colorChars[i];
+            color = static_cast<char>(colorChars[i]);
         }
     }
 }
@@ -203,10 +220,10 @@ void colorSensor::nameColorMode2(){
         if(value[i] == greenValues[i][0] || value[i] == greenValues[i][1]){ colorCounts[5]++; }
         if(value[i] == blueValues[i][0] || value[i] == blueValues[i][1]){ colorCounts[6]++; }
     }
-    std::array<char, AmountOfColors> colorChars = {'P','b','O','Y','R','G','B'};
+    std::array<colors, AmountOfColors> colorChars = {colors::pink, colors::brown, colors::orange, colors::yellow, colors::red, colors::green, colors::blue};
     for( unsigned int i = 0; i < AmountOfColors; i++ ){
         if( colorCounts[i] == 3 ){
-            color = colorChars[i];
+            color = static_cast<char>(colorChars[i]);
         }
     }
 }

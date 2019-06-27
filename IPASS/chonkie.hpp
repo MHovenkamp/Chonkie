@@ -22,7 +22,14 @@ public:
 };
 
 class lives{
-public:
+protected:
+    enum class activities: char{
+        drink   = 'D',
+        eat     = 'E',
+        sleep   = 'S',
+        play    = 'P',
+        empty   = 'X'
+    };
     colorSensor sensor; 
     healthbar happiness;
     healthbar hunger;
@@ -33,6 +40,7 @@ public:
     int thirstLevel;
     int sleepLevel;
     int happinessLevel;
+public:
     
     lives( hwlib::target::pin_adc & freq, colorSensor & sensor ):
         sensor( freq, sensor ),
@@ -66,7 +74,6 @@ private:
     crosses rightEyeDeath;
     hwlib::circle mouth;
     bool left;
-    bool right;
     bool mouthBool;
     bool drinkBool;
 public:

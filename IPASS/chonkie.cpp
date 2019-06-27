@@ -12,6 +12,46 @@ void chonkie::print(){
     display.flush();
 }
 
+void chonkie::animationCheck(){
+    activity = manageHealth();
+    hwlib::cout << "activity " << activity << hwlib::endl;
+    if( activity == static_cast<char>(activities::drink)){
+        drink();
+        display.flush();
+        activity = static_cast<char>(activities::empty);
+    }
+    if( activity == static_cast<char>(activities::eat)){
+        eat();
+        display.flush();
+        activity = static_cast<char>(activities::empty);
+    }
+    if( activity == static_cast<char>(activities::sleep)){
+        sleep();
+        display.flush();
+        activity = static_cast<char>(activities::empty);
+    }
+    display.flush();
+}
+bool chonkie::deathCkeck(){
+    int deathCount = 0;
+    if( happinessLevel <= 0 ){
+        deathCount++;
+    }
+    if( hungerLevel <= 0 ){
+        deathCount++;
+    }
+    if( thirstLevel <= 0 ){
+        deathCount++;
+    }
+    if( sleepLevel <= 0 ){
+        deathCount++;
+    }
+    if( deathCount >= 2 ){
+        return true;
+    }
+    return false;
+}
+
 void chonkie::updateIdle(){
     if( left ){
         leftEye = hwlib::circle( hwlib::xy( coordinaat.x - 10, coordinaat.y), 5, hwlib::white);
@@ -19,57 +59,16 @@ void chonkie::updateIdle(){
         leftPupil = hwlib::circle( hwlib::xy( coordinaat.x - 12, coordinaat.y), 2, hwlib::white);
         rightPupil = hwlib::circle( hwlib::xy( coordinaat.x + 8, coordinaat.y), 2, hwlib::white);
         left = false;
-        right = true;
     }
-    else if( right ){
+    else if( left == false ){
         leftEye = hwlib::circle( hwlib::xy( coordinaat.x - 10, coordinaat.y), 5, hwlib::white);
         rightEye = hwlib::circle( hwlib::xy( coordinaat.x + 10, coordinaat.y), 5, hwlib::white);
         leftPupil = hwlib::circle( hwlib::xy( coordinaat.x - 8, coordinaat.y), 2, hwlib::white);
         rightPupil = hwlib::circle( hwlib::xy( coordinaat.x + 12, coordinaat.y), 2, hwlib::white);
         left = true;
-        right = false;
     }
 }
 
-void chonkie::animationCheck(){
-    activity = manageHealth();
-    hwlib::cout << "activity " << activity << hwlib::endl;
-    if( activity == 'D'){
-        drink();
-        display.flush();
-        activity = 'X';
-    }
-    if( activity == 'E'){
-        eat();
-        display.flush();
-        activity = 'X';
-    }
-    if( activity == 'S'){
-        sleep();
-        display.flush();
-        activity = 'X';
-    }
-    display.flush();
-}
-bool chonkie::deathCkeck(){
-    if( happinessLevel <= 0 ){
-        death();
-        return true;
-    }
-    if( hungerLevel <= 0 ){
-        death();
-        return true;
-    }
-    if( thirstLevel <= 0 ){
-        death();
-        return true;
-    }
-    if( sleepLevel <= 0 ){
-        death();
-        return true;
-    }
-    return false;
-}
 void chonkie::drink(){
     int a;
     int b;
@@ -177,7 +176,6 @@ void healthbar::setfilled( int value ){
     if( filled > 30 ){
         filled = 30;
     }
-    //hwlib::cout << filled << hwlib::endl;
 }
 
 //_________________________________lives______________________________________________
@@ -197,32 +195,37 @@ void lives::set(){
 char lives::manageHealth(){
     sensor.calculateRGB();
     sensor.nameColorMode1();
+    sensor.calculatelightIntensity();
+    int light = sensor.getlightIntensity();
     char action = sensor.getColor();
     hwlib::cout << action << hwlib::endl;
     int hungerUp = 2;
     int thirstUp = 3;
     int sleepUp = 1;
-    char activity = 'X';
-    if( action == 'R'){
-        activity = 'E';
+    char activity = static_cast<char>(activities::empty);
+    if( light > 1000 ){
+        activity = static_cast<char>(activities::sleep);
+        sleepLevel = sleepLevel + 40;
+        hungerLevel = hungerLevel - hungerUp;
+        thirstLevel = thirstLevel - thirstUp;
+        happinessLevel = (hungerLevel + thirstLevel + sleepLevel) / 3;
+    }
+    else if( action == static_cast<char>(sensor.colors::red)){
+        activity = static_cast<char>(activities::eat);
         hungerLevel = hungerLevel + 40;
         thirstLevel = thirstLevel - thirstUp;
         sleepLevel = sleepLevel - sleepUp;
         happinessLevel = (hungerLevel + thirstLevel + sleepLevel) / 3;
     }
-    else if( action == 'B'){
-        activity = 'D';
+    else if( action == static_cast<char>(sensor.colors::blue)){
+        activity = static_cast<char>(activities::drink);
         thirstLevel = thirstLevel + 40;
         hungerLevel = hungerLevel - hungerUp;
         sleepLevel = sleepLevel - sleepUp;
         happinessLevel = (hungerLevel + thirstLevel + sleepLevel) / 3;
     }
-    else if( action == 'G'){
-        activity = 'S';
-        sleepLevel = sleepLevel + 40;
-        hungerLevel = hungerLevel - hungerUp;
-        thirstLevel = thirstLevel - thirstUp;
-        happinessLevel = (hungerLevel + thirstLevel + sleepLevel) / 3;
+    else if( action == static_cast<char>(sensor.colors::green)){
+        activity = static_cast<char>(activities::play);
     }
     else{
         hungerLevel = hungerLevel - hungerUp;
@@ -230,23 +233,11 @@ char lives::manageHealth(){
         sleepLevel = sleepLevel - sleepUp;
         happinessLevel = (hungerLevel + thirstLevel + sleepLevel) / 3;
     }
-    if(sleepLevel > 100){
-        sleepLevel = 100;
-    }
-    if(sleepLevel < 0){
-        sleepLevel = 0;
-    }
-    if(thirstLevel > 100){
-        thirstLevel = 100;
-    }
-    if(thirstLevel < 0){
-        thirstLevel = 0;
-    }
-    if(hungerLevel > 100){
-        hungerLevel = 100;
-    }
-    if(hungerLevel < 0){
-        hungerLevel = 0;
-    }
+    if(sleepLevel > 100){ sleepLevel = 100;}
+    if(sleepLevel < 0){ sleepLevel = 0; }
+    if(thirstLevel > 100){ thirstLevel = 100; }
+    if(thirstLevel < 0){ thirstLevel = 0; }
+    if(hungerLevel > 100){ hungerLevel = 100; }
+    if(hungerLevel < 0){ hungerLevel = 0; }
     return activity;
 }
