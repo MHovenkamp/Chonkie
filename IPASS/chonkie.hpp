@@ -2,7 +2,7 @@
 #define CHONKIE_HPP
 
 #include "hwlib.hpp"
-#include "colorSensor.hpp"
+#include "library/colorSensor.hpp"
 #include "buildingBlocks.hpp"
 #include "../../hwlib/library/hwlib.hpp"
 

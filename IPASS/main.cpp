@@ -1,7 +1,7 @@
 #include "hwlib.hpp"
-#include "freqMeasuringtool.hpp"
+#include "library/freqMeasuringtool.hpp"
 #include "chonkie.hpp"
-#include "colorSensor.hpp"
+#include "library/colorSensor.hpp"
 //#include "../../hwlib/library/hwlib.hpp"
 
 int main( void ){
