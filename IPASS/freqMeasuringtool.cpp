@@ -10,7 +10,7 @@ void freqMeasuringtool::sample(){
 }
 void freqMeasuringtool::calculate(){
     uint_fast64_t duration = t2-t1;
-    frequenty = duration;
+    frequenty = 1000000 / duration;
 }
 
 int freqMeasuringtool::read(){

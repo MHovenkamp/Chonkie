@@ -42,8 +42,8 @@ protected:
     int happinessLevel;
 public:
     
-    lives( hwlib::target::pin_adc & freq, colorSensor & sensor ):
-        sensor( freq, sensor ),
+    lives( hwlib::target::pin_in & freq, hwlib::port_out & pins ):
+        sensor( freq, pins ),
         happiness( healthbar( hwlib::xy( 95 , 5 ))),
         hunger( healthbar( hwlib::xy( 95 , 20 ))),
         thirst( healthbar( hwlib::xy( 95 , 35 ))),
@@ -77,8 +77,8 @@ private:
     bool mouthBool;
     bool drinkBool;
 public:
-    chonkie( hwlib::target::pin_adc & freq , colorSensor & sensor, hwlib::glcd_oled & display, hwlib::xy coordinaat ):
-        lives( freq, sensor ),
+    chonkie( hwlib::target::pin_in & freq , hwlib::port_out & pins, hwlib::glcd_oled & display, hwlib::xy coordinaat ):
+        lives( freq, pins ),
         border( rectangle( display, 5 , 5 , 80, 60)),
         display( display ),
         coordinaat( coordinaat ),

@@ -203,7 +203,7 @@ char lives::manageHealth(){
     int thirstUp = 3;
     int sleepUp = 1;
     char activity = static_cast<char>(activities::empty);
-    if( light > 1000 ){
+    if( light < 1000 ){
         activity = static_cast<char>(activities::sleep);
         sleepLevel = sleepLevel + 40;
         hungerLevel = hungerLevel - hungerUp;

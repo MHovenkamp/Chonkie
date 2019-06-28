@@ -21,6 +21,7 @@
 class colorSensor: public freqMeasuringtool{
 private:
     hwlib::port_out & pins;
+    hwlib::color RGB = hwlib::color(0,0,0);
     int red = 0;
     int green = 0;
     int blue = 0;
@@ -63,7 +64,7 @@ public:
     /// getRGB() function.
     /// \details
     /// This function returns the RGB values as an array of integers int the order red, green, blue.
-    std::array<int, 3> getRGB();
+    hwlib::color getRGB();
 
     /// \brief
     /// setRed() function.

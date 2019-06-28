@@ -10,8 +10,7 @@ int colorSensor::getlightIntensity(){
     return lightIntensity;
 }
 
-std::array<int, 3> colorSensor::getRGB(){
-    std::array<int, 3> RGB = {red, green, blue};
+hwlib::color colorSensor::getRGB(){
     return RGB;
 }
 
@@ -22,17 +21,17 @@ void colorSensor::setRed(){
 }
 
 void colorSensor::setClear(){
-    pins.write( 6 );
+    pins.write( 0b0110 );
     flush();
 }
 
 void colorSensor::setGreen(){
-    pins.write( 7 );
+    pins.write( 0b1110 );
     flush();
 }
 
 void colorSensor::setBlue(){
-    pins.write( 5 );
+    pins.write( 0b1010 );
     flush();
 }
 
@@ -43,28 +42,20 @@ void colorSensor::flush(){
 void colorSensor::calculatelightIntensity(){
     setClear();
     const int sampleSize = 25;
-    std::array<int,sampleSize> samples;
-    for (unsigned int i = 0; i < sampleSize; i++){
-        sample();
-        samples[i]= read();
-    }
     int value = 0;
-    for (unsigned int j = 0; j < sampleSize; j++){
-        value += samples[j];
+    for (unsigned int i = 0; i <= sampleSize; i++){
+        sample();
+        value += read();
     }
     lightIntensity = value/sampleSize;
 }
 
 int colorSensor::calculateColor(){
     const int sampleSize = 25;
-    std::array<int,sampleSize> samples;
-    for (unsigned int i = 0; i < sampleSize; i++){
-        sample();
-        samples[i]= read();
-    }
     int value = 0;
-    for (unsigned int j = 0; j < sampleSize; j++){
-        value += samples[j];
+    for (unsigned int i = 0; i <= sampleSize; i++){
+        sample();
+        value += read();
     }
     return value/sampleSize;
 }
@@ -73,14 +64,21 @@ void colorSensor::calculateRGB(){
     //red
     setRed();
     red = calculateColor();
-    //Green
+    // //Green
     setGreen();
     green = calculateColor();
-    //Blue
+    // //Blue
     setBlue();
     blue = calculateColor();
-    //turn them into useable RGB value with max 255
     shrinkValueRGB();
+    RGB = hwlib::color(red, green, blue);
+}
+
+void colorSensor::printRGB(){
+    hwlib::cout << "Red: " << RGB.red << hwlib::endl;
+    hwlib::cout << "Green: " << RGB.green << hwlib::endl;
+    hwlib::cout << "Blue: " << RGB.blue << hwlib::endl;
+    hwlib::cout << "Color " << color << hwlib::endl;
 }
 
 void colorSensor::shrinkValueRGB(){
@@ -108,18 +106,6 @@ void colorSensor::shrinkValueRGB(){
     }   
 }
 
-void colorSensor::printRGB(){
-    hwlib::cout << "Red: " << red << hwlib::endl;
-    hwlib::cout << "Green: " << green << hwlib::endl;
-    hwlib::cout << "Blue: " << blue << hwlib::endl;
-    if(color == static_cast<char>(colors::orange) || color == static_cast<char>(colors::blue) || color == static_cast<char>(colors::pink) || color == static_cast<char>(colors::red)){
-        hwlib::cout << "Color (30% chance) " << color << hwlib::endl;
-    }
-    else{
-        hwlib::cout << "Color " << color << hwlib::endl;
-    }
-}
-
 void colorSensor::nameColorMode1(){
     std::array<int,2> zone1 = {0,32};
     std::array<int,2> zone2 = {32,64};
@@ -134,9 +120,9 @@ void colorSensor::nameColorMode1(){
     int greenZone = 0;
     int blueZone = 0;
     for( unsigned int i = 0; i < 8; i++ ){
-        if( red >= zones[i][0] && red <= zones[i][1]){redZone = i+1;}
-        if( green >= zones[i][0] && green <= zones[i][1]){greenZone = i+1;}
-        if( blue >= zones[i][0] && blue <= zones[i][1]){blueZone = i+1;}
+        if( RGB.red >= zones[i][0] && RGB.red <= zones[i][1]){redZone = i+1;}
+        if( RGB.green >= zones[i][0] && RGB.green <= zones[i][1]){greenZone = i+1;}
+        if( RGB.blue >= zones[i][0] && RGB.blue <= zones[i][1]){blueZone = i+1;}
     }
     hwlib::cout << "___________________________________" << hwlib::endl;
     hwlib::cout << "red " << redZone << hwlib::endl;
@@ -145,9 +131,9 @@ void colorSensor::nameColorMode1(){
     hwlib::cout << "___________________________________" << hwlib::endl;
 
     std::array<int, 3> value = {redZone, greenZone, blueZone};
-    std::array<std::array<int, 2>,3> redValues = {{{4,5},{6,7},{6,7}}};
-    std::array<std::array<int, 2>,3> greenValues = {{{5,6},{5,6},{5,6}}};
-    std::array<std::array<int, 2>,3> blueValues = {{{5,6},{4,5},{3,4}}};
+    std::array<std::array<int, 2>,3> redValues = {{{5,6},{3,4},{5,4}}};
+    std::array<std::array<int, 2>,3> greenValues = {{{7,8},{7,8},{7,8}}};
+    std::array<std::array<int, 2>,3> blueValues = {{{4,4},{5,4},{6,7}}};
     const int AmountOfColors = 4;
     std::array<int, AmountOfColors> colorCounts = {0, 0, 0};
     for( unsigned int i = 0; i < 3; i++ ){
@@ -183,10 +169,10 @@ void colorSensor::nameColorMode2(){
     int redZone = 0;
     int greenZone = 0;
     int blueZone = 0;
-    for( unsigned int i = 0; i < 8; i++ ){
-        if( red >= zones[i][0] && red <= zones[i][1]){redZone = i+1;}
-        if( green >= zones[i][0] && green <= zones[i][1]){greenZone = i+1;}
-        if( blue >= zones[i][0] && blue <= zones[i][1]){blueZone = i+1;}
+    for( unsigned int i = 0; i < 14; i++ ){
+        if( RGB.red >= zones[i][0] && RGB.red <= zones[i][1]){redZone = i+1;}
+        if( RGB.green >= zones[i][0] && RGB.green <= zones[i][1]){greenZone = i+1;}
+        if( RGB.blue >= zones[i][0] && RGB.blue <= zones[i][1]){blueZone = i+1;}
     }
     hwlib::cout << "___________________________________" << hwlib::endl;
     hwlib::cout << "red " << redZone << hwlib::endl;
@@ -195,13 +181,13 @@ void colorSensor::nameColorMode2(){
     hwlib::cout << "___________________________________" << hwlib::endl;
 
     std::array<int, 3> value = {redZone, greenZone, blueZone};
-    std::array<std::array<int, 2>,3> pinkValues = {{{5,5},{6,6},{5,4}}};
-    std::array<std::array<int, 2>,3> brownValues = {{{4,5},{5,5},{5,5}}};
-    std::array<std::array<int, 2>,3> orangeValues = {{{5,6},{7,8},{6,7}}};
-    std::array<std::array<int, 2>,3> yellowValues = {{{5,4},{5,5},{5,5}}};
-    std::array<std::array<int, 2>,3> redValues = {{{4,3},{5,5},{4,4}}};
-    std::array<std::array<int, 2>,3> greenValues = {{{8,8},{8,7},{8,7}}};
-    std::array<std::array<int, 2>,3> blueValues = {{{7,8},{5,6},{4,5}}};
+    std::array<std::array<int, 2>,3> pinkValues = {{{12,11},{9,8},{12,11}}};
+    std::array<std::array<int, 2>,3> brownValues = {{{13,14},{10,11},{12,13}}};
+    std::array<std::array<int, 2>,3> orangeValues = {{{11,10},{7,6},{8,7}}};
+    std::array<std::array<int, 2>,3> yellowValues = {{{12,11},{10,9},{9,8}}};
+    std::array<std::array<int, 2>,3> redValues = {{{8,9},{5,6},{6,7}}};
+    std::array<std::array<int, 2>,3> greenValues = {{{7,6},{8,7},{8,7}}};
+    std::array<std::array<int, 2>,3> blueValues = {{{7,8},{8,9},{11,12}}};
     const int AmountOfColors = 7;
     std::array<int, AmountOfColors> colorCounts = {0, 0, 0, 0, 0, 0, 0};
     for( unsigned int i = 0; i < 3; i++ ){
