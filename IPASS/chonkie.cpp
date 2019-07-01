@@ -26,9 +26,13 @@ void chonkie::animationCheck(){
         activity = static_cast<char>(activities::empty);
     }
     if( activity == static_cast<char>(activities::sleep)){
-        sleep();
+        //sleep();
         display.flush();
         activity = static_cast<char>(activities::empty);
+    }
+    if( activity == static_cast<char>(activities::empty)){
+        updateIdle();
+        display.flush();
     }
     display.flush();
 }

@@ -11,7 +11,8 @@
 /// \details
 /// This is an ADT that gives the user a frequenty from an analog to digital converter pin.
 /// The frequenty in microseconds is stored as an integer inside the function 
-/// the ADT is dependant on the hwlib library for an input pin and its now_us() function.
+/// the ADT is dependant on the hwlib library for an input pin_in and its now_us() function.
+/// https://github.com/wovo/hwlib
 
 class freqMeasuringtool{
 protected: 
@@ -24,7 +25,7 @@ public:
     /// \brief
     /// freqMeasuringtool constructor with pin.
     /// \details
-    /// This is a constructor that constructs an ADT with the input of an hwlib::target::pin_adc.
+    /// This is a constructor that constructs an ADT with the input of an hwlib::target::pin_in.
     freqMeasuringtool( hwlib::target::pin_in & pin ):
         pin( pin )
     {}
@@ -44,7 +45,7 @@ public:
     /// \brief
     /// read() function.
     /// \details
-    /// The read function gives you the frequenty of the pin back as an int.
+    /// The read function gives you the frequenty in Hertz of the pin back as an int.
     int read();
 
 };

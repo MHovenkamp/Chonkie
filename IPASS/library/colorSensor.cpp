@@ -78,6 +78,7 @@ void colorSensor::printRGB(){
     hwlib::cout << "Red: " << RGB.red << hwlib::endl;
     hwlib::cout << "Green: " << RGB.green << hwlib::endl;
     hwlib::cout << "Blue: " << RGB.blue << hwlib::endl;
+    hwlib::cout << "lightintensity " << lightIntensity << hwlib::endl;
     hwlib::cout << "Color " << color << hwlib::endl;
 }
 
@@ -133,7 +134,7 @@ void colorSensor::nameColorMode1(){
     std::array<int, 3> value = {redZone, greenZone, blueZone};
     std::array<std::array<int, 2>,3> redValues = {{{5,6},{3,4},{5,4}}};
     std::array<std::array<int, 2>,3> greenValues = {{{7,8},{7,8},{7,8}}};
-    std::array<std::array<int, 2>,3> blueValues = {{{4,4},{5,4},{6,7}}};
+    std::array<std::array<int, 2>,3> blueValues = {{{4,5},{5,4},{6,7}}};
     const int AmountOfColors = 4;
     std::array<int, AmountOfColors> colorCounts = {0, 0, 0};
     for( unsigned int i = 0; i < 3; i++ ){

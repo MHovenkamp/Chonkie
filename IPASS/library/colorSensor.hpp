@@ -41,7 +41,7 @@ public:
     /// \brief
     /// colorSensor constructor.
     /// \details
-    /// This constructor construct the colorSensor with the intput of an hwlib::target::pin_acd and four hwlib::target::pin_out. 
+    /// This constructor construct the colorSensor with the intput of an hwlib::target::in and four pins in an hwlib::port_out. 
     /// It also sets the frequenty scaling to 2%.
     colorSensor( hwlib::target::pin_in & freq, hwlib::port_out & pins ):
         freqMeasuringtool( freq ),
@@ -63,7 +63,7 @@ public:
     /// \brief
     /// getRGB() function.
     /// \details
-    /// This function returns the RGB values as an array of integers int the order red, green, blue.
+    /// This function returns the RGB values as an hwlib::color.
     hwlib::color getRGB();
 
     /// \brief
@@ -111,7 +111,7 @@ public:
     /// \brief
     /// calculateRGB() function.
     /// \details
-    /// This function sets the three integers corresponding with the colors red, green and blue using the calculateColor function.
+    /// This function sets the hwlib::color using the calculateColor function.
     void calculateRGB();
 
     /// \brief
@@ -141,9 +141,9 @@ public:
     /// nameColorMode2() function.
     /// \details
     /// This function fils the color char with either the color red, green, blue, brown, yellow, orange or pink. 
-    /// It is not very consistent and can be influenced by ambient light.
+    /// It is consistent but can be influenced by ambient light.
     /// If the color in front of the sensor cannot be defined as one of the colors the color will be filled with an 'X'.
-    /// The color is determined by putting shrinkValueRGB values into 16 different zones. the combination of three zondes correspond with a color.s
+    /// The color is determined by putting shrinkValueRGB values into 16 different zones. the combination of three zondes correspond with a color.
     /// red = 'R',
     /// green = 'G',
     /// blue = 'B',

@@ -30,7 +30,6 @@ int main( void ){
             baby.set();
             baby.draw( display ); //healtbars
             baby.print();
-            baby.updateIdle();
             baby.animationCheck();
             death = baby.deathCkeck();
         }
