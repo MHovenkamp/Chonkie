@@ -31,7 +31,7 @@ int main( void ){
             baby.draw( display ); //healtbars
             baby.print();
             baby.animationCheck();
-            death = baby.deathCkeck();
+            death = baby.deathCheck();
         }
         if( death ){
             display.clear();

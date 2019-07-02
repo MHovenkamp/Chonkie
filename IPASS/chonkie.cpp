@@ -18,17 +18,14 @@ void chonkie::animationCheck(){
     if( activity == static_cast<char>(activities::drink)){
         drink();
         display.flush();
-        activity = static_cast<char>(activities::empty);
     }
     if( activity == static_cast<char>(activities::eat)){
         eat();
         display.flush();
-        activity = static_cast<char>(activities::empty);
     }
     if( activity == static_cast<char>(activities::sleep)){
-        //sleep();
+        sleep();
         display.flush();
-        activity = static_cast<char>(activities::empty);
     }
     if( activity == static_cast<char>(activities::empty)){
         updateIdle();
@@ -36,7 +33,7 @@ void chonkie::animationCheck(){
     }
     display.flush();
 }
-bool chonkie::deathCkeck(){
+bool chonkie::deathCheck(){
     int deathCount = 0;
     if( happinessLevel <= 0 ){
         deathCount++;
@@ -209,21 +206,21 @@ char lives::manageHealth(){
     char activity = static_cast<char>(activities::empty);
     if( light < 1000 ){
         activity = static_cast<char>(activities::sleep);
-        sleepLevel = sleepLevel + 40;
+        sleepLevel = sleepLevel + 20;
         hungerLevel = hungerLevel - hungerUp;
         thirstLevel = thirstLevel - thirstUp;
         happinessLevel = (hungerLevel + thirstLevel + sleepLevel) / 3;
     }
     else if( action == static_cast<char>(sensor.colors::red)){
         activity = static_cast<char>(activities::eat);
-        hungerLevel = hungerLevel + 40;
+        hungerLevel = hungerLevel + 20;
         thirstLevel = thirstLevel - thirstUp;
         sleepLevel = sleepLevel - sleepUp;
         happinessLevel = (hungerLevel + thirstLevel + sleepLevel) / 3;
     }
     else if( action == static_cast<char>(sensor.colors::blue)){
         activity = static_cast<char>(activities::drink);
-        thirstLevel = thirstLevel + 40;
+        thirstLevel = thirstLevel + 20;
         hungerLevel = hungerLevel - hungerUp;
         sleepLevel = sleepLevel - sleepUp;
         happinessLevel = (hungerLevel + thirstLevel + sleepLevel) / 3;

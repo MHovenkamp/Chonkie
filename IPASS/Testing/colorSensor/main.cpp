@@ -10,7 +10,6 @@ int main( void ){
     auto s2 = hwlib::target::pin_out( hwlib::target::pins::d4 );
     auto s3 = hwlib::target::pin_out( hwlib::target::pins::d5 );
     auto frequenty = hwlib::target::pin_in( hwlib::target::pins::d8 );       
-    int value = 0;
 
     auto pins = hwlib::port_out_from( s0, s1, s2, s3 );
     freqMeasuringtool test( frequenty );
@@ -18,11 +17,12 @@ int main( void ){
 
     for(;;){
         hwlib::wait_ms(500);
+        hwlib::cout << "START MEASUREMENT" << hwlib::endl;
         sensor.calculateRGB();
+        sensor.calculatelightIntensity();
         sensor.nameColorMode2();
         sensor.printRGB();
-        value = test.read();
-        hwlib::cout << value << hwlib::endl;
+        hwlib::cout << "END MEASUREMENT" << hwlib::endl;
     }
 }
 

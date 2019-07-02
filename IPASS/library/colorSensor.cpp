@@ -14,7 +14,6 @@ hwlib::color colorSensor::getRGB(){
     return RGB;
 }
 
-
 void colorSensor::setRed(){
     pins.write( 0b0010 );
     flush();
@@ -41,13 +40,7 @@ void colorSensor::flush(){
 
 void colorSensor::calculatelightIntensity(){
     setClear();
-    const int sampleSize = 25;
-    int value = 0;
-    for (unsigned int i = 0; i <= sampleSize; i++){
-        sample();
-        value += read();
-    }
-    lightIntensity = value/sampleSize;
+    lightIntensity = read();
 }
 
 int colorSensor::calculateColor(){
@@ -61,49 +54,42 @@ int colorSensor::calculateColor(){
 }
 
 void colorSensor::calculateRGB(){
-    //red
-    setRed();
-    red = calculateColor();
-    // //Green
-    setGreen();
-    green = calculateColor();
-    // //Blue
-    setBlue();
-    blue = calculateColor();
-    shrinkValueRGB();
-    RGB = hwlib::color(red, green, blue);
+    calculatelightIntensity();
+    int value = getlightIntensity();
+    if( value > 1000 ){
+        //red
+        setRed();
+        red = calculateColor();
+        //Green
+        setGreen();
+        green = calculateColor();
+        //Blue
+        setBlue();
+        blue = calculateColor();
+        shrinkValueRGB();
+        RGB = hwlib::color(red, green, blue);
+    }
 }
 
 void colorSensor::printRGB(){
     hwlib::cout << "Red: " << RGB.red << hwlib::endl;
     hwlib::cout << "Green: " << RGB.green << hwlib::endl;
     hwlib::cout << "Blue: " << RGB.blue << hwlib::endl;
-    hwlib::cout << "lightintensity " << lightIntensity << hwlib::endl;
+    hwlib::cout << "___________________________________" << hwlib::endl;
     hwlib::cout << "Color " << color << hwlib::endl;
+    hwlib::cout << "___________________________________" << hwlib::endl;
+    hwlib::cout << "lightintensity " << lightIntensity << hwlib::endl;
 }
 
 void colorSensor::shrinkValueRGB(){
-    int highest = red;
-    int lowest = blue;
-    int last = 0;
-    if( red > green && red > blue ){highest = red;}
-    if( green > red && green > blue ){highest = green;}
-    if( blue > green && blue > red ){highest = blue;}
-    if( red < green && red < blue ){lowest = red;}
-    if( green < red && green < blue ){lowest = green;}
-    if( blue < green && blue < red ){lowest = blue;}
-    while( lowest > 0 ){
+    int highest = std::max(std::max(red ,green), blue);
+    int lowest = std::min(std::min(red ,green), blue);
+    while( lowest > 0 && highest > 255){
         red = red/2;
         green = green/2;
         blue = blue/2;
-        if( red > green && red > blue ){highest = red;}
-        if( green > red && green > blue ){highest = green;}
-        if( blue > green && blue > red ){highest = blue;}
-        if( red < green && red < blue ){lowest = red;}
-        if( green < red && green < blue ){lowest = green;}
-        if( blue < green && blue < red ){lowest = blue;}
-        if (lowest == last || highest < 255){break;}
-        last = lowest;
+        highest = std::max(std::max(red ,green), blue);
+        lowest = std::min(std::min(red ,green), blue);
     }   
 }
 
@@ -126,9 +112,9 @@ void colorSensor::nameColorMode1(){
         if( RGB.blue >= zones[i][0] && RGB.blue <= zones[i][1]){blueZone = i+1;}
     }
     hwlib::cout << "___________________________________" << hwlib::endl;
-    hwlib::cout << "red " << redZone << hwlib::endl;
-    hwlib::cout << "green " << greenZone << hwlib::endl;
-    hwlib::cout << "blue " << blueZone << hwlib::endl;
+    hwlib::cout << "redZone " << redZone << hwlib::endl;
+    hwlib::cout << "greenZone " << greenZone << hwlib::endl;
+    hwlib::cout << "blueZone " << blueZone << hwlib::endl;
     hwlib::cout << "___________________________________" << hwlib::endl;
 
     std::array<int, 3> value = {redZone, greenZone, blueZone};
@@ -176,9 +162,9 @@ void colorSensor::nameColorMode2(){
         if( RGB.blue >= zones[i][0] && RGB.blue <= zones[i][1]){blueZone = i+1;}
     }
     hwlib::cout << "___________________________________" << hwlib::endl;
-    hwlib::cout << "red " << redZone << hwlib::endl;
-    hwlib::cout << "green " << greenZone << hwlib::endl;
-    hwlib::cout << "blue " << blueZone << hwlib::endl;
+    hwlib::cout << "redZone " << redZone << hwlib::endl;
+    hwlib::cout << "greenZone " << greenZone << hwlib::endl;
+    hwlib::cout << "blueZone " << blueZone << hwlib::endl;
     hwlib::cout << "___________________________________" << hwlib::endl;
 
     std::array<int, 3> value = {redZone, greenZone, blueZone};
