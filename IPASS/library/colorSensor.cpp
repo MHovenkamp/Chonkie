@@ -2,6 +2,13 @@
 #include "hwlib.hpp"
 #include "../../hwlib/library/hwlib.hpp"
 
+//____________________________________________________________________________________
+//          Copyright Maaike Hovenkamp 2019. 
+// Distributed under the Boost Software License, Version 1.0. 
+//  (See accompanying file LICENSE_1_0.txt or copy at 
+//          https://www.boost.org/LICENSE_1_0.txt)
+//____________________________________________________________________________________
+
 char colorSensor::getColor(){
     return color;
 }
@@ -118,9 +125,9 @@ void colorSensor::nameColorMode1(){
     hwlib::cout << "___________________________________" << hwlib::endl;
 
     std::array<int, 3> value = {redZone, greenZone, blueZone};
-    std::array<std::array<int, 2>,3> redValues = {{{5,6},{3,4},{5,4}}};
-    std::array<std::array<int, 2>,3> greenValues = {{{7,8},{7,8},{7,8}}};
-    std::array<std::array<int, 2>,3> blueValues = {{{4,5},{5,4},{6,7}}};
+    std::array<std::array<int, 2>,3> redValues = {{{5,6},{2,3},{3,4}}};
+    std::array<std::array<int, 2>,3> greenValues = {{{3,4},{4,5},{3,4}}};
+    std::array<std::array<int, 2>,3> blueValues = {{{1,2},{2,3},{4,5}}};
     const int AmountOfColors = 4;
     std::array<int, AmountOfColors> colorCounts = {0, 0, 0};
     for( unsigned int i = 0; i < 3; i++ ){
@@ -168,13 +175,13 @@ void colorSensor::nameColorMode2(){
     hwlib::cout << "___________________________________" << hwlib::endl;
 
     std::array<int, 3> value = {redZone, greenZone, blueZone};
-    std::array<std::array<int, 2>,3> pinkValues = {{{12,11},{9,8},{12,11}}};
-    std::array<std::array<int, 2>,3> brownValues = {{{13,14},{10,11},{12,13}}};
-    std::array<std::array<int, 2>,3> orangeValues = {{{11,10},{7,6},{8,7}}};
-    std::array<std::array<int, 2>,3> yellowValues = {{{12,11},{10,9},{9,8}}};
-    std::array<std::array<int, 2>,3> redValues = {{{8,9},{5,6},{6,7}}};
-    std::array<std::array<int, 2>,3> greenValues = {{{7,6},{8,7},{8,7}}};
-    std::array<std::array<int, 2>,3> blueValues = {{{7,8},{8,9},{11,12}}};
+    std::array<std::array<int, 2>,3> pinkValues = {{{8,9},{4,5},{7,8}}};
+    std::array<std::array<int, 2>,3> brownValues = {{{11,12},{7,8},{9,10}}};
+    std::array<std::array<int, 2>,3> orangeValues = {{{7,8},{2,3},{2,3}}};
+    std::array<std::array<int, 2>,3> yellowValues = {{{8,9},{6,7},{4,5}}};
+    std::array<std::array<int, 2>,3> redValues = {{{9,10},{3,4},{5,6}}};
+    std::array<std::array<int, 2>,3> greenValues = {{{4,5},{7,8},{6,7}}};
+    std::array<std::array<int, 2>,3> blueValues = {{{2,3},{4,5},{7,8}}};
     const int AmountOfColors = 7;
     std::array<int, AmountOfColors> colorCounts = {0, 0, 0, 0, 0, 0, 0};
     for( unsigned int i = 0; i < 3; i++ ){
