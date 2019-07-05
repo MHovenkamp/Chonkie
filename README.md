@@ -35,7 +35,7 @@ contains 2 library's:
   freqmeasuringtool, reads a frequency from a hwlib::pin_in.
   colorSensor: library for the tcs3200 color sensor.
   
-IMPORTANT: the color sensor library has a few preset color definitions. the definitions only work if the sensor is encased in a white cone as seen in the poster.
+IMPORTANT: the color sensor library has a few preset color definitions. the definitions only work if the sensor is encased in a white cone as seen in the poster. \n
 components:
   •	Arduino Due
   •	Breadboard
