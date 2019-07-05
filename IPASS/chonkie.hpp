@@ -16,6 +16,15 @@
 
 /// @file
 
+/// \mainpage
+/// Ipass project of Maaike Hovenkamp, student of Hogeschool Utrecht.
+///____________________________________________________________________________________
+///          Copyright Maaike Hovenkamp 2019. 
+/// Distributed under the Boost Software License, Version 1.0. 
+///  (See accompanying file LICENSE_1_0.txt or copy at 
+///          https://www.boost.org/LICENSE_1_0.txt)
+///____________________________________________________________________________________
+
 /// \brief
 /// healthbar ADT
 /// \details
